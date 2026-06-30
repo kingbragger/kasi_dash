@@ -1,0 +1,74 @@
+Build a modern, premium, responsive website called “Kasi Dash”, a township-based delivery platform for South Africa.
+
+STYLE / UI REQUIREMENTS
+Ultra modern SaaS-style design (Uber / Bolt / Airbnb level)
+Dark premium theme (black, white, subtle gold or neon accents)
+Smooth animations (fade, slide, hover transitions)
+Mobile-first responsive design
+Clean luxury typography and spacing
+NO dashes anywhere in text or UI content
+Short, clear, high-conversion copy only
+PAGES / SECTIONS
+1. HERO SECTION
+Headline: “Fast Deliveries Built for Kasi”
+Subtext: Local delivery made simple, fast, and affordable
+CTA buttons:
+Get Started
+Join Waitlist
+Email capture input field
+2. HOW IT WORKS
+
+3 steps:
+
+Order in seconds
+Nearby driver accepts
+Fast delivery to your door
+3. FEATURES SECTION
+Fast delivery
+Trusted local drivers
+Affordable pricing
+Real time tracking
+4. PAYMENT INTEGRATION (IMPORTANT)
+
+Integrate Ozow Instant EFT payment gateway for checkout.
+
+Requirements:
+Add a “Pay with Ozow” button at checkout
+Redirect users to Ozow payment flow
+After successful payment, show success confirmation page
+Handle failed/cancelled payments gracefully
+Store payment status (success, pending, failed)
+Use clean API integration structure (environment variables for keys)
+Prepare backend route like /api/payments/ozow
+Flow:
+User places order
+User clicks Pay with Ozow
+System generates payment request
+Redirect to Ozow hosted payment page
+Return to success or failure page
+Update order status
+5. CALL TO ACTION SECTION
+Premium styled section
+Text: “Start delivering smarter today”
+Button: “Launch Kasi Dash”
+6. FOOTER
+Simple copyright
+Social links placeholders
+FUNCTIONALITY
+Email capture system (local state or Firebase optional)
+Order + payment flow structure
+Ozow payment integration fully prepared
+Smooth scrolling navigation
+Clean reusable components
+Optional WhatsApp “Order Now” floating button
+TECH STACK
+React or Next.js
+Tailwind CSS
+Framer Motion animations
+Node.js backend for payment handling (if needed)
+IMPORTANT
+Make it feel like a real funded startup
+Focus on conversion and premium user experience
+No clutter or messy UI
+Everything should feel investor ready and production grade
+Payment flow must be realistic and structured properly for Ozow integration in South Africa

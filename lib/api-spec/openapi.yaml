@@ -1,0 +1,1087 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Kasi Dash API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: waitlist
+    description: Waitlist email capture
+  - name: payments
+    description: Ozow payment operations
+  - name: orders
+    description: Order management
+  - name: careers
+    description: Public careers / job listings
+  - name: applications
+    description: Public application submissions
+  - name: staff
+    description: Staff/admin protected operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /waitlist:
+    post:
+      operationId: joinWaitlist
+      tags: [waitlist]
+      summary: Join the waitlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JoinWaitlistBody"
+      responses:
+        "201":
+          description: Joined
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaitlistEntryResponse"
+        "409":
+          description: Already on waitlist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    get:
+      operationId: getWaitlistCount
+      tags: [waitlist]
+      summary: Get waitlist count
+      responses:
+        "200":
+          description: Count
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaitlistCount"
+
+  /payments/ozow/initiate:
+    post:
+      operationId: initiateOzowPayment
+      tags: [payments]
+      summary: Initiate Ozow payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InitiatePaymentBody"
+      responses:
+        "200":
+          description: Payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentInitiatedResponse"
+
+  /payments/ozow/notify:
+    post:
+      operationId: ozowPaymentNotify
+      tags: [payments]
+      summary: Ozow notification webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OzowNotification"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /payments/{transactionId}:
+    get:
+      operationId: getPaymentStatus
+      tags: [payments]
+      summary: Get payment status
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Payment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentStatusResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Create order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+    get:
+      operationId: listOrders
+      tags: [orders]
+      summary: List orders
+      responses:
+        "200":
+          description: Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderResponse"
+
+  /orders/stats:
+    get:
+      operationId: getOrderStats
+      tags: [orders]
+      summary: Order statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderStatsResponse"
+
+  /orders/{orderId}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      summary: Get order by ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /careers:
+    get:
+      operationId: listJobListings
+      tags: [careers]
+      summary: List active job listings
+      responses:
+        "200":
+          description: Job listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobListing"
+
+  /careers/{jobId}:
+    get:
+      operationId: getJobListing
+      tags: [careers]
+      summary: Get job listing by ID
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobListing"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /apply/driver:
+    post:
+      operationId: submitDriverApplication
+      tags: [applications]
+      summary: Submit driver application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DriverApplicationBody"
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationResponse"
+
+  /apply/vendor:
+    post:
+      operationId: submitVendorApplication
+      tags: [applications]
+      summary: Submit vendor/partner application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VendorApplicationBody"
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationResponse"
+
+  /apply/job:
+    post:
+      operationId: submitJobApplication
+      tags: [applications]
+      summary: Submit job application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobApplicationBody"
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationResponse"
+
+  /staff/login:
+    post:
+      operationId: staffLogin
+      tags: [staff]
+      summary: Staff login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StaffLoginBody"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StaffLoginResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /staff/logout:
+    post:
+      operationId: staffLogout
+      tags: [staff]
+      summary: Staff logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /staff/me:
+    get:
+      operationId: getStaffMe
+      tags: [staff]
+      summary: Get current staff session
+      responses:
+        "200":
+          description: Staff session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StaffSession"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /staff/stats:
+    get:
+      operationId: getStaffStats
+      tags: [staff]
+      summary: Admin dashboard statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StaffStatsResponse"
+
+  /staff/applications/drivers:
+    get:
+      operationId: listDriverApplications
+      tags: [staff]
+      summary: List all driver applications
+      responses:
+        "200":
+          description: Applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DriverApplication"
+
+  /staff/applications/drivers/{id}:
+    get:
+      operationId: getDriverApplication
+      tags: [staff]
+      summary: Get driver application
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Application
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriverApplication"
+    patch:
+      operationId: updateDriverApplication
+      tags: [staff]
+      summary: Update driver application status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationStatusBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriverApplication"
+
+  /staff/applications/vendors:
+    get:
+      operationId: listVendorApplications
+      tags: [staff]
+      summary: List all vendor applications
+      responses:
+        "200":
+          description: Applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VendorApplication"
+
+  /staff/applications/vendors/{id}:
+    patch:
+      operationId: updateVendorApplication
+      tags: [staff]
+      summary: Update vendor application status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationStatusBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VendorApplication"
+
+  /staff/applications/jobs:
+    get:
+      operationId: listJobApplications
+      tags: [staff]
+      summary: List all job applications
+      responses:
+        "200":
+          description: Applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobApplication"
+
+  /staff/applications/jobs/{id}:
+    patch:
+      operationId: updateJobApplication
+      tags: [staff]
+      summary: Update job application status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationStatusBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobApplication"
+
+  /staff/careers:
+    get:
+      operationId: staffListJobListings
+      tags: [staff]
+      summary: List all job listings (including inactive)
+      responses:
+        "200":
+          description: All listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobListing"
+    post:
+      operationId: createJobListing
+      tags: [staff]
+      summary: Create a job listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJobListingBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobListing"
+
+  /staff/careers/{id}:
+    patch:
+      operationId: updateJobListing
+      tags: [staff]
+      summary: Update a job listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateJobListingBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobListing"
+    delete:
+      operationId: deleteJobListing
+      tags: [staff]
+      summary: Delete a job listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required: [error, message]
+
+    ApiSuccess:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required: [success]
+
+    JoinWaitlistBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+      required: [email]
+
+    WaitlistEntryResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, email, createdAt]
+
+    WaitlistCount:
+      type: object
+      properties:
+        count:
+          type: integer
+      required: [count]
+
+    InitiatePaymentBody:
+      type: object
+      properties:
+        orderId:
+          type: string
+        amount:
+          type: number
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        customerPhone:
+          type: string
+        description:
+          type: string
+      required: [orderId, amount, customerName, customerEmail, description]
+
+    PaymentInitiatedResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        paymentUrl:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, success, failed, cancelled]
+      required: [transactionId, paymentUrl, status]
+
+    OzowNotification:
+      type: object
+      properties:
+        TransactionId:
+          type: string
+        SiteCode:
+          type: string
+        TransactionReference:
+          type: string
+        Amount:
+          type: number
+        Status:
+          type: string
+        Optional1:
+          type: string
+        HashCheck:
+          type: string
+      required: [TransactionId, Status]
+
+    PaymentStatusResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        orderId:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+          enum: [pending, processing, success, failed, cancelled]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [transactionId, orderId, amount, status, createdAt, updatedAt]
+
+    CreateOrderBody:
+      type: object
+      properties:
+        pickupAddress:
+          type: string
+        deliveryAddress:
+          type: string
+        customerName:
+          type: string
+        customerPhone:
+          type: string
+        customerEmail:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+      required: [pickupAddress, deliveryAddress, customerName, customerPhone, amount]
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        pickupAddress:
+          type: string
+        deliveryAddress:
+          type: string
+        customerName:
+          type: string
+        customerPhone:
+          type: string
+        customerEmail:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+          enum: [pending, accepted, in_transit, delivered, cancelled]
+        paymentStatus:
+          type: string
+          enum: [pending, processing, success, failed, cancelled]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, pickupAddress, deliveryAddress, customerName, customerPhone, amount, status, paymentStatus, createdAt, updatedAt]
+
+    OrderStatsResponse:
+      type: object
+      properties:
+        totalOrders:
+          type: integer
+        deliveredOrders:
+          type: integer
+        activeOrders:
+          type: integer
+        totalRevenue:
+          type: number
+        waitlistCount:
+          type: integer
+      required: [totalOrders, deliveredOrders, activeOrders, totalRevenue, waitlistCount]
+
+    JobListing:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum: [full_time, part_time, contract, internship]
+        description:
+          type: string
+        requirements:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, title, department, location, type, description, requirements, isActive, createdAt, updatedAt]
+
+    CreateJobListingBody:
+      type: object
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum: [full_time, part_time, contract, internship]
+        description:
+          type: string
+        requirements:
+          type: string
+        isActive:
+          type: boolean
+      required: [title, department, location, type, description, requirements]
+
+    UpdateJobListingBody:
+      type: object
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum: [full_time, part_time, contract, internship]
+        description:
+          type: string
+        requirements:
+          type: string
+        isActive:
+          type: boolean
+
+    DriverApplicationBody:
+      type: object
+      properties:
+        fullName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        idNumber:
+          type: string
+        vehicleType:
+          type: string
+          enum: [bicycle, motorcycle, car, bakkie, van]
+        vehicleRegistration:
+          type: string
+        licenseNumber:
+          type: string
+        township:
+          type: string
+        message:
+          type: string
+      required: [fullName, email, phone, idNumber, vehicleType, licenseNumber, township]
+
+    VendorApplicationBody:
+      type: object
+      properties:
+        businessName:
+          type: string
+        contactName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        businessType:
+          type: string
+        township:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+      required: [businessName, contactName, email, phone, businessType, township]
+
+    JobApplicationBody:
+      type: object
+      properties:
+        jobListingId:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        coverLetter:
+          type: string
+        linkedIn:
+          type: string
+        experience:
+          type: string
+      required: [jobListingId, fullName, email, phone, coverLetter]
+
+    ApplicationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, status, createdAt]
+
+    UpdateApplicationStatusBody:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [pending, reviewing, approved, rejected]
+        notes:
+          type: string
+      required: [status]
+
+    DriverApplication:
+      type: object
+      properties:
+        id:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        idNumber:
+          type: string
+        vehicleType:
+          type: string
+        vehicleRegistration:
+          type: string
+        licenseNumber:
+          type: string
+        township:
+          type: string
+        message:
+          type: string
+        status:
+          type: string
+          enum: [pending, reviewing, approved, rejected]
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, fullName, email, phone, vehicleType, licenseNumber, township, status, createdAt, updatedAt]
+
+    VendorApplication:
+      type: object
+      properties:
+        id:
+          type: string
+        businessName:
+          type: string
+        contactName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        businessType:
+          type: string
+        township:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+          enum: [pending, reviewing, approved, rejected]
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, businessName, contactName, email, phone, businessType, township, status, createdAt, updatedAt]
+
+    JobApplication:
+      type: object
+      properties:
+        id:
+          type: string
+        jobListingId:
+          type: string
+        jobTitle:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        coverLetter:
+          type: string
+        linkedIn:
+          type: string
+        experience:
+          type: string
+        status:
+          type: string
+          enum: [pending, reviewing, approved, rejected]
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, jobListingId, fullName, email, phone, coverLetter, status, createdAt, updatedAt]
+
+    StaffLoginBody:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required: [username, password]
+
+    StaffLoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        username:
+          type: string
+        role:
+          type: string
+      required: [success, username, role]
+
+    StaffSession:
+      type: object
+      properties:
+        username:
+          type: string
+        role:
+          type: string
+        isAuthenticated:
+          type: boolean
+      required: [username, role, isAuthenticated]
+
+    StaffStatsResponse:
+      type: object
+      properties:
+        totalOrders:
+          type: integer
+        activeOrders:
+          type: integer
+        totalRevenue:
+          type: number
+        waitlistCount:
+          type: integer
+        pendingDriverApplications:
+          type: integer
+        pendingVendorApplications:
+          type: integer
+        pendingJobApplications:
+          type: integer
+        activeJobListings:
+          type: integer
+      required: [totalOrders, activeOrders, totalRevenue, waitlistCount, pendingDriverApplications, pendingVendorApplications, pendingJobApplications, activeJobListings]

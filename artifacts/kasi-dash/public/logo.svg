@@ -1,0 +1,32 @@
+<svg width="320" height="100" viewBox="0 0 320 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flameGrad" x1="160" y1="0" x2="160" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="60%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#glow)" transform="translate(132, 2)">
+    <path d="M28 30 C20 23 12 16 16 6 C10 12 6 18 10 26 C6 22 4 17 6 11 C0 18 2 28 10 32 C6 30 4 27 6 24 C8 32 16 35 28 32Z" fill="url(#flameGrad)" opacity="0.9"/>
+    <path d="M28 30 C36 23 44 16 40 6 C46 12 50 18 46 26 C50 22 52 17 50 11 C56 18 54 28 46 32 C50 30 52 27 50 24 C48 32 40 35 28 32Z" fill="url(#flameGrad)" opacity="0.9"/>
+    <path d="M28 35 C24 27 20 21 24 13 C26 18 28 21 28 21 C28 21 30 18 32 13 C36 21 32 27 28 35Z" fill="#FFD700"/>
+    <circle cx="18" cy="28" r="5.5" fill="#D4AF37" opacity="0.85"/>
+    <circle cx="18" cy="28" r="3" fill="#FFE55C" opacity="0.6"/>
+    <circle cx="38" cy="28" r="5.5" fill="#D4AF37" opacity="0.85"/>
+    <circle cx="38" cy="28" r="3" fill="#FFE55C" opacity="0.6"/>
+  </g>
+  <path d="M36 50 Q160 42 284 50" stroke="#D4AF37" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <text x="160" y="78" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-weight="700" font-size="36" fill="url(#textGrad)" filter="url(#glow)" letter-spacing="2">Kasi Dash</text>
+  <path d="M44 90 Q160 100 276 90" stroke="#D4AF37" stroke-width="2" fill="none" opacity="0.7" stroke-linecap="round"/>
+</svg>

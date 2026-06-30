@@ -1,0 +1,139 @@
+Modify the existing kasidash.co.za codebase.
+
+IMPORTANT RULES:
+
+* DO NOT rebuild or redesign the website
+* DO NOT remove existing features
+* ONLY ADD new lightweight features
+* Keep performance impact minimal
+* Reuse existing styling and components
+* Ensure changes are modular and safe
+
+---
+
+# 1. INVESTMENT OPPORTUNITY SECTION (ADD OR ENHANCE)
+
+Add a section titled:
+
+## Investment Opportunity
+
+Kasidash & BuildForge (PTY) Ltd offers early-stage participation in its digital innovation ecosystem.
+
+We are currently accepting limited investor contributions from individuals who want to support growth across technology, AI, fintech, and digital platforms.
+
+---
+
+## INVESTMENT RANGE
+
+Display clearly:
+
+* Minimum Contribution: R500
+* Recommended Contribution: R1000
+
+Use clean UI cards or badges.
+
+---
+
+## PURPOSE OF FUNDS
+
+* Software development and platform scaling
+* AI and innovation lab expansion
+* Fintech systems development
+* Marketing and user acquisition
+* Operational expansion across divisions
+
+---
+
+## INVESTOR PROCESS
+
+1. Submit investment interest form
+2. Review by team
+3. Zoom introduction meeting
+4. NDA and onboarding for selected investors
+5. Payment and allocation process
+
+---
+
+# 2. INVESTOR INTEREST FORM
+
+Create or enhance form fields:
+
+* Full Name
+* Email Address
+* Phone Number
+* Investment Amount (R500 / R1000 / Other)
+* Preferred Contact Method
+* Message (optional)
+* Checkbox: “I confirm interest in investment participation”
+
+Submit button:
+“Submit Investment Interest”
+
+---
+
+# 3. ADMIN DASHBOARD (EXISTING REQUIREMENT)
+
+Store all submissions securely and display in admin panel.
+
+Admin view must show:
+
+* Name
+* Email
+* Phone
+* Investment amount
+* Message
+* Timestamp
+
+Admin route must be protected via:
+
+* password OR environment variable token
+
+---
+
+# 4. PAYMENT INSTRUCTIONS SECTION (NEW ADDITION)
+
+Add a separate section titled:
+
+## Payment Instructions (For Approved Investors Only)
+
+⚠️ IMPORTANT: This section should be visually separated and optionally hidden until investor approval stage if possible.
+
+---
+
+## BANKING DETAILS
+
+Account Name: Unity Logistics and Delivery
+Account Holder: MR HM NDLOVU
+Account Number: 63185730091
+Bank Reference: Use Email Address or Phone Number provided during registration
+
+---
+
+## IMPORTANT NOTE
+
+Add disclaimer text:
+
+“Payments should only be made after official confirmation from the Kasidash & BuildForge team following investor approval and onboarding process. Unauthorized or unverified payments will not be recognized.”
+
+---
+
+# 5. SECURITY & SAFETY RULES
+
+* Do NOT expose admin panel publicly
+* Do NOT expose investor submissions publicly
+* Protect payment section from misuse where possible
+* Keep system lightweight and modular
+* Avoid backend overengineering
+
+---
+
+# 6. FINAL GOAL
+
+This update must:
+
+* Add investor interest capture system
+* Add admin dashboard for leads
+* Add structured investment process (R500–R1000 range)
+* Add controlled payment instructions section
+* Maintain existing website without rebuild
+* Keep system fast, simple, and production-safe

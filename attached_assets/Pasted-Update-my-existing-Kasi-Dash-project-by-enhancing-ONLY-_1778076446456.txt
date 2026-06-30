@@ -1,0 +1,115 @@
+Update my existing Kasi Dash project by enhancing ONLY the BuildForge section.
+
+Important rules:
+
+Do NOT remove or modify ecommerce functionality
+Do NOT restructure the project
+Do NOT move BuildForge outside Kasi Dash
+Keep changes minimal and focused
+Do NOT use any dash characters (– or -) in UI text or headings
+Use clean human readable formatting only
+💼 1. ADD WEBSITE SERVICES INSIDE BUILDFORGE
+
+Inside BuildForge section add a new area called:
+
+Website Services
+
+🎨 2. UI REQUIREMENTS
+
+The section must be visually appealing and include:
+
+Relevant icons for each section
+Developer icon for development
+Design icon for UI and UX
+Marketing or business icon for services
+Relevant images or illustrations that match:
+web development
+online business
+ecommerce
+startups
+Clean card based layout
+Modern SaaS style design
+Mobile responsive
+💰 3. PRICING SECTION
+
+Create 3 service cards with icons:
+
+Starter Website R1900
+Basic business website
+One to three pages
+Mobile friendly design
+Contact form included
+Fast delivery
+
+Standard Website R2500
+Multi page business website
+Better UI design
+Service pages included
+Basic SEO setup
+
+Premium Website R3500
+Fully custom website
+Advanced UI and UX design
+SEO optimized
+Priority delivery
+
+🧑‍💻 4. CLIENT APPLICATION FORM
+
+Add a simple form inside BuildForge:
+
+Fields
+Full Name
+Business Name
+Contact Information
+Website Type Needed
+Business Description
+
+Button text
+Apply for Website
+
+Store data using localStorage only
+
+🏆 5. BUILDFORGE DEVELOPER ASSIGNMENT SYSTEM
+
+Admin must be able to:
+
+View all website applications inside BuildForge
+Assign a developer or designer from BuildForge Core Team
+Track project status
+New
+Assigned
+In Progress
+Completed
+
+Each assigned developer must show a badge:
+
+Certified BuildForge Core Team Member
+
+📊 6. ADMIN FEATURES
+
+Inside BuildForge admin area:
+
+View all website requests
+Assign team members
+Update status
+Track progress
+
+🚫 STRICT RULES
+
+Do not use dash characters anywhere in UI text
+Do not break ecommerce system
+Do not remove any existing features
+Do not add unnecessary complexity
+Do not over engineer backend
+Keep everything simple and lightweight
+
+🔥 GOAL
+
+BuildForge must now function as:
+
+Skill challenge system
+Core team selection system
+Website client acquisition system
+Developer assignment system
+
+All inside Kasi Dash only
